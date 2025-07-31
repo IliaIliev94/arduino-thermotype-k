@@ -58,9 +58,8 @@ void loop() {
   temp1 = thermocouple1.readCelsius();
   Serial.println(temp1);
 
-  ssd1306_printFixedN (0, 16, "T1: ", STYLE_NORMAL, FONT_SIZE_2X);
-  dtostrf(temp1, 6, 2, result);
-  ssd1306_printFixedN (30, 16, result, STYLE_NORMAL, FONT_SIZE_2X);
+  printTemperatureToDisplay("T1: ", temp1, 0, 16, 30, 16);
+  printTemperatureToDisplay("T2: ", 25.5, 0, 32, 30, 32);
 
   unsigned long currentMillis = millis();
 
@@ -111,4 +110,11 @@ void printDate(DateTime now, File dataFile) {
 void printTemperatureToFile(File dataFile, char* name, float temp) {
     dataFile.print(name);
     dataFile.print(temp);
+}
+
+void printTemperatureToDisplay(char* name, float temperature, uint8_t nameX, uint8_t nameY, uint8_t tempX, uint8_t tempY) {
+  char temp1Result[8];
+  ssd1306_printFixedN (nameX, nameY, name, STYLE_NORMAL, FONT_SIZE_2X);
+  dtostrf(temperature, 6, 2, temp1Result);
+  ssd1306_printFixedN (tempX, tempY, temp1Result, STYLE_NORMAL, FONT_SIZE_2X);
 }
