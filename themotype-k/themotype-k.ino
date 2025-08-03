@@ -8,12 +8,15 @@
 
 
 float temp1 = 0;
+float temp2 = 0;
+float temp3 = 0;
 char temp1Converted[3] = ""; 
 MAX6675 thermocouple1(8, 9, 10); 
+MAX6675 thermocouple2(4, 5, 6);
+MAX6675 thermocouple3(2, 3, 7);
 
 RTC_DS3231 rtc; // Create an RTC object
 Ssd1306Console  console;
-char result[8];
 unsigned long previousMillis = 0;
 unsigned long interval = 30000;
 
@@ -56,10 +59,13 @@ void setup() {
 
 void loop() {
   temp1 = thermocouple1.readCelsius();
-  Serial.println(temp1);
+  temp2 = thermocouple2.readCelsius();
+  temp3 = thermocouple3.readCelsius();
 
   printTemperatureToDisplay("T1: ", temp1, 0, 16, 30, 16);
-  printTemperatureToDisplay("T2: ", 25.5, 0, 32, 30, 32);
+  printTemperatureToDisplay("T2: ", temp2, 0, 32, 30, 32);
+  printTemperatureToDisplay("T3: ", temp2, 0, 48, 30, 48);
+
 
   unsigned long currentMillis = millis();
 
@@ -77,6 +83,8 @@ void saveToFile() {
   File dataFile = SD.open("datalog.txt", FILE_WRITE);
   printDate(now, dataFile);
   printTemperatureToFile(dataFile, " T1: ", temp1);
+  printTemperatureToFile(dataFile, " T2: ", temp2);
+  printTemperatureToFile(dataFile, " T3: ", temp3);
   dataFile.println();
   Serial.println();
   dataFile.close();
