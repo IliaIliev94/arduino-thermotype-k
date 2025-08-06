@@ -64,7 +64,7 @@ void loop() {
 
   printTemperatureToDisplay("T1: ", temp1, 0, 16, 30, 16);
   printTemperatureToDisplay("T2: ", temp2, 0, 32, 30, 32);
-  printTemperatureToDisplay("T3: ", temp2, 0, 48, 30, 48);
+  printTemperatureToDisplay("T3: ", temp3, 0, 48, 30, 48);
 
 
   unsigned long currentMillis = millis();
